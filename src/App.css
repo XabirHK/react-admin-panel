@@ -2,9 +2,26 @@
   text-align: center;
 }
 
+.bgImg{
+  background-image: url(./assets/images/register_bg_2.png);
+  /* Full height */
+  height: 100%;
+  min-height: 937px; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #282c34;
+}
+fulHeight
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+.loginCard{
+  padding-top: 100px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -43,7 +60,7 @@ label {
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
-  margin-top: 50px;
+  margin-top: 0px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
