@@ -8,16 +8,18 @@ import nav from '../_nav';
 import routes from '../views';
 import ContextProviders from '../vibe/components/utilities/ContextProviders';
 import handleKeyAccessibility, { handleClickAccessibility } from '../vibe/helpers/handleTabAccessibility';
+import AuthService from "../services/auth.service";
 
 const MOBILE_SIZE = 992;
 
 export default class DashboardLayout extends Component {
   constructor(props) {
     super(props);
+    //this.logOut = this.logOut.bind(this);
     this.state = {
       sidebarCollapsed: false,
       isMobile: window.innerWidth <= MOBILE_SIZE,
-      showChat1: true,
+      showChat1: false,
     };
   }
 
@@ -41,6 +43,10 @@ export default class DashboardLayout extends Component {
     document.addEventListener('click', handleClickAccessibility);
   }
 
+  logOut() {
+    AuthService.logout();
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
   }
@@ -53,6 +59,7 @@ export default class DashboardLayout extends Component {
     this.setState({ showChat1: false });
   };
 
+  
   render() {
     const { sidebarCollapsed } = this.state;
     const sidebarCollapsedClass = sidebarCollapsed ? 'side-menu-collapsed' : '';
@@ -64,7 +71,7 @@ export default class DashboardLayout extends Component {
             <SidebarNav
               nav={nav}
               logo={Logo}
-              logoText="VIBE."
+              logoText="CMS."
               isSidebarCollapsed={sidebarCollapsed}
               toggleSidebar={this.toggleSideCollapse}
               {...this.props}
@@ -89,12 +96,12 @@ export default class DashboardLayout extends Component {
             </Page>
           </div>
           <Footer>
-            <span>Copyright © 2019 Nice Dash. All rights reserved.</span>
+            <span>Copyright © 2020 ZHK CMS. All rights reserved.</span>
             <span>
               <a href="#!">Terms</a> | <a href="#!">Privacy Policy</a>
             </span>
             <span className="ml-auto hidden-xs">
-              Made with{' '}
+              Made with{'React-Bootstrap '}
               <span role="img" aria-label="taco">
                 🌮
               </span>
@@ -124,18 +131,23 @@ function HeaderNav() {
       </NavItem>
       <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
-          New
+          Account
         </DropdownToggle>
         <DropdownMenu right>
-          <DropdownItem>Project</DropdownItem>
-          <DropdownItem>User</DropdownItem>
+          <DropdownItem>Profile</DropdownItem>
+          {/* <DropdownItem>User</DropdownItem> */}
           <DropdownItem divider />
           <DropdownItem>
-            Message <Badge color="primary">10</Badge>
+            <div>
+            <a href="/login" className="nav-link" onClick={AuthService.logout}>
+                  LogOut
+            </a>
+            </div>
+            {/* Message <Badge color="primary">10</Badge> */}
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
-      <UncontrolledDropdown nav inNavbar>
+      {/* <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav>
           <Avatar size="small" color="blue" initials="JS" />
         </DropdownToggle>
@@ -145,7 +157,7 @@ function HeaderNav() {
           <DropdownItem divider />
           <DropdownItem>Reset</DropdownItem>
         </DropdownMenu>
-      </UncontrolledDropdown>
+      </UncontrolledDropdown> */}
     </React.Fragment>
   );
 }
