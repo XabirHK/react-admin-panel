@@ -27,7 +27,7 @@ const pageList = [
   {
     name: 'Dashboard',
     path: '/home',
-    component: Dashboard,
+    component: Analytics,
   },
   {
     name: 'Buttons',

@@ -64,7 +64,7 @@ export default class DashboardLayout extends Component {
             <SidebarNav
               nav={nav}
               logo={Logo}
-              logoText="VIBE."
+              logoText="CMS."
               isSidebarCollapsed={sidebarCollapsed}
               toggleSidebar={this.toggleSideCollapse}
               {...this.props}
@@ -89,12 +89,12 @@ export default class DashboardLayout extends Component {
             </Page>
           </div>
           <Footer>
-            <span>Copyright © 2019 Nice Dash. All rights reserved.</span>
+            <span>Copyright © 2020 ZHK CMS. All rights reserved.</span>
             <span>
               <a href="#!">Terms</a> | <a href="#!">Privacy Policy</a>
             </span>
             <span className="ml-auto hidden-xs">
-              Made with{' '}
+              Made with{'React-Bootstrap '}
               <span role="img" aria-label="taco">
                 🌮
               </span>
