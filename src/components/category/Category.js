@@ -13,6 +13,7 @@ import {
     Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
 import CategoryDataService from "../../services/category.service.js";
+import { Loader } from '../../vibe/';
 import AddCategry from "./AddCategory";
 import ListCategory from "./ListCatagiry";
 
@@ -25,6 +26,7 @@ export default class Category extends Component {
         };
 
         this.toggle = this.toggle.bind(this);
+        this.loading = true;
     }
     toggle() {
         this.setState(prevState => ({
@@ -34,6 +36,7 @@ export default class Category extends Component {
 
     componentDidMount() {
         this.retrieveCatagories();
+        this.loading = false;
     }
     
     retrieveCatagories() {
@@ -49,16 +52,31 @@ export default class Category extends Component {
         });
     }
 
+    renderLoader(){
+        if(this.loading === true)
+           return (
+            <Col md={3} className='LoaderIcon'>
+                <Loader type="bars" small />
+            </Col>
+           )
+        else   
+            return null;
+     }
+
+
+
     render() {
-        const { catagories } = this.state;
+        const { catagories} = this.state;
         return (
             <div>
                 <h3 className="m-b">Current Catagories</h3>
+                <Row>
+                    { this.renderLoader() }
+                    <Col md="2" style={{ margin: "0", padding: "0", marginLeft: "auto" }}>
+                        <Button block color="primary" onClick={this.toggle} >Add New</Button>
+                    </Col>
+                </Row>
                 
-                <Col md="2" style={{ margin: "0", padding: "0", marginLeft: "auto" }}>
-                    <Button block color="primary" onClick={this.toggle} >Add New</Button>
-                </Col>
-
                 <Modal style={{witdth:"1200px"}} isOpen={this.state.modal} toggle={this.toggle}>
                         {/* <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
                         <ModalBody>
@@ -85,10 +103,9 @@ export default class Category extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                        {catagories &&
-                            catagories.map((catagory) => (
-                            <tr key={catagory.category_id}>
-                                <td></td>
+                        {catagories && catagories.map((catagory, i) => (
+                            <tr key = {catagory.categoryId}>
+                                <td>{++i}</td>
                                 <td>{catagory.title}</td>
                                 <td>{catagory.position}</td>
                                 <td>{catagory.parent}</td>
