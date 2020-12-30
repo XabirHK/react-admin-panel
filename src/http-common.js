@@ -1,0 +1,14 @@
+import axios from "axios";
+const user = JSON.parse(localStorage.getItem('user'));
+var Token = '';
+if (user && user.accessToken) {
+  Token= user.accessToken;
+}
+
+export default axios.create({
+  baseURL: "http://localhost:8080/api/v1",
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    "Authorization": 'Bearer ' + Token
+  }
+});

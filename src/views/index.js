@@ -22,12 +22,19 @@ import ProgressBars from './elements/ProgressBars';
 import PaginationPage from './elements/Pagination';
 import ErrorPage from './pages/404';
 
+import Category from '../components/category/Category';
+
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
   {
     name: 'Dashboard',
     path: '/home',
     component: Analytics,
+  },
+  {
+    name: 'Category',
+    path: '/catagory',
+    component: Category,
   },
   {
     name: 'Buttons',

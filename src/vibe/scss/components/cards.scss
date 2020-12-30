@@ -5,8 +5,9 @@
 	background: white;
 	border-radius: $cardRoundedCorner;
 	@include cardShadow;
-	border: 0;
+	border: 2px;
 	margin-bottom: 20px;
+	border-top: 2px #0E61A9 !important;
 
 	hr {
 		margin-left: -$panelPadding;

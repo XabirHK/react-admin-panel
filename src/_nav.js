@@ -6,16 +6,17 @@ export default {
       icon: 'Home',
     },
     {
-      name: 'UI Elements',
+      name: 'Category',
       icon: 'Layers',
+      url: '/catagory',
       children: [
         {
-          name: 'Buttons',
-          url: '/elements/buttons',
+          name: 'Catagories',
+          url: '/catagory',
         },
         {
-          name: 'Grid',
-          url: '/elements/grid',
+          name: 'Add new catagory',
+          url: '/catagory/add',
         },
         {
           name: 'Alerts',
@@ -68,72 +69,79 @@ export default {
       ],
     },
     {
-      name: 'Pages',
+      name: 'Post',
       icon: 'File',
       children: [
         {
-          name: 'Blank',
-          url: '/pages/blank',
+          name: 'Posts',
+          url: '/post/list',
         },
         {
-          name: 'Sub Navigation',
-          url: '/pages/subnav',
+          name: 'Add new post',
+          url: '/post/add',
         },
-        {
-          name: '404',
-          url: '/pages/404',
-        },
+        // {
+        //   name: 'Blank',
+        //   url: '/pages/blank',
+        // },
+        // {
+        //   name: 'Sub Navigation',
+        //   url: '/pages/subnav',
+        // },
+        // {
+        //   name: '404',
+        //   url: '/pages/404',
+        // },
       ],
     },
-    {
-      name: 'Apps',
-      icon: 'Cloud',
-      children: [
-        {
-          name: 'Analytics',
-          url: '/apps/analytics',
-        },
-        {
-          name: 'Invoice',
-          url: '/apps/invoice',
-        },
-        {
-          name: 'Activity Feed',
-          url: '/apps/feed',
-        },
-        {
-          name: 'CMS',
-          url: '/apps/cms',
-        },
-      ],
-    },
+    // {
+    //   name: 'Apps',
+    //   icon: 'Cloud',
+    //   children: [
+    //     {
+    //       name: 'Analytics',
+    //       url: '/apps/analytics',
+    //     },
+    //     {
+    //       name: 'Invoice',
+    //       url: '/apps/invoice',
+    //     },
+    //     {
+    //       name: 'Activity Feed',
+    //       url: '/apps/feed',
+    //     },
+    //     {
+    //       name: 'CMS',
+    //       url: '/apps/cms',
+    //     },
+    //   ],
+    // },
     {
       divider: true,
     },
-    {
-      name: 'Widgets',
-      url: '/widgets',
-      icon: 'Package',
-      badge: {
-        text: 'NEW',
-      },
-    },
+    // {
+    //   name: 'Widgets',
+    //   url: '/widgets',
+    //   icon: 'Package',
+    //   badge: {
+    //     text: 'NEW',
+    //   },
+    // },
   ],
   bottom: [
+    // {
+    //   name: 'Get Vibe',
+    //   url: 'https://github.com/NiceDash/Vibe',
+    //   icon: 'GitHub',
+    //   external: true,
+    //   target: '_blank',
+    // },
     {
-      name: 'Get Vibe',
-      url: 'https://github.com/NiceDash/Vibe',
-      icon: 'GitHub',
-      external: true,
-      target: '_blank',
-    },
-    {
-      name: 'Account',
-      url: '/dashboard',
+      name: 'Logout',
+      url: '/logout',
       icon: 'User',
       badge: {
         variant: 'success',
-        text: '3',
       },
     },
   ],

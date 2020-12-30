@@ -21,7 +21,7 @@ class ModalsPage extends Component {
             <Card>
                 <CardBody>
                     <Button color="primary" onClick={this.toggle}>Open Modal</Button>
-                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <Modal isOpen={this.state.modal} toggle={this.toggle} >
                         <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
                         <ModalBody>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
