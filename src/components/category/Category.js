@@ -21,8 +21,16 @@ export default class Category extends Component {
     constructor(props) {
         super(props);
         this.retrieveCatagories = this.retrieveCatagories.bind(this);
+        this.saveCategory = this.saveCategory.bind(this);
         this.state = {
-            modal: false
+            modal: false,
+            id: null,
+            title: "",
+            description: "", 
+            published: false,
+            parent:0,
+            language:1,
+            submitted: false
         };
 
         this.toggle = this.toggle.bind(this);
@@ -38,6 +46,45 @@ export default class Category extends Component {
         this.retrieveCatagories();
         this.loading = false;
     }
+
+    saveCategory() {
+        console.log('Functin a dhukse');
+        var data = {
+            title: this.state.title,
+            description: this.state.description,
+            parent: this.state.parent,
+            published: this.state.published,
+            language: 1,
+        };
+    
+        CategoryDataService.create(data)
+          .then(response => {
+            this.setState({
+              title: response.data.title,
+              description: response.data.description,
+              parent: response.data.parent,
+              published: response.data.published,
+              language: 1,
+              submitted: true
+            });
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+            });
+    }
+
+    newCategory() {
+        this.setState({
+            id: null,
+            title: "",
+            description: "", 
+            published: false,
+            parent:0,
+            language:1,
+            submitted: false
+        });
+    }
     
     retrieveCatagories() {
         CategoryDataService.getAll()
@@ -52,6 +99,7 @@ export default class Category extends Component {
         });
     }
 
+    
     renderLoader(){
         if(this.loading === true)
            return (
@@ -77,17 +125,7 @@ export default class Category extends Component {
                     </Col>
                 </Row>
                 
-                <Modal style={{witdth:"1200px"}} isOpen={this.state.modal} toggle={this.toggle}>
-                        {/* <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-                        <ModalBody>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                        </ModalFooter> */}
-                    
-                </Modal>
+                
                         
                 <hr />
                 <Card>
@@ -116,6 +154,79 @@ export default class Category extends Component {
                     </Table>
                 </CardBody>
             </Card>
+
+
+            <Modal className="submit-form" isOpen={this.state.modal} toggle={this.toggle}>
+                <ModalHeader toggle={this.toggle}>Add a new Category</ModalHeader>
+                    <ModalBody>
+                        <Row>
+                            <Col md={8}>
+                                <Card>
+                                    <CardBody>
+                                        <FormGroup>
+                                            <Label for="title">Title</Label>
+                                            <Input type="text" name="title" id="title" />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label for="description">Description</Label>
+                                            <Input type="textarea" name="description" id="description" style={{height: 358}} />
+                                        </FormGroup>
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                            <Col md={4}>
+                                {/* <Button block className="m-b">Position of the Category</Button> */}
+                                <Card>
+                                    <CardBody>
+                                        <div>
+                                        <FormGroup>
+                                            <Label for="position">Place</Label>
+                                            <Input type="select" name="position" id="position">
+                                                <option value='header'>Header</option>
+                                                <option value='footer'>Footer</option>
+                                                <option value='side'>Side Panel</option>
+                                                <option value='null' defaultChecked>Unpublished</option>
+                                            </Input>
+                                        </FormGroup>
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                                
+                                <Card>
+                                    <CardBody>
+                                        <div>
+                                        <FormGroup>
+                                            <Label for="parent">Parent</Label>
+                                            <Input type="select" name="parent" id="parent">
+                                            <option defaultChecked>No Parent</option>
+                                            {catagories && catagories.map((catagory, i) => (
+                                                <option key = {catagory.categoryId} value={catagory.categoryId}>{catagory.title}</option>
+                                            ))}
+                                                
+                                            </Input>
+                                        </FormGroup>
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                                <Card>
+                                    <CardBody>
+                                        <FormGroup>
+                                            <Label for="exampleSelect4">Tags</Label>
+                                            <Input type="text" name="select" id="exampleSelect4" />
+                                        </FormGroup>
+                                    </CardBody>
+                                </Card>
+                                
+                            </Col>
+                        </Row>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button  color="primary" onClick={this.saveCategory}>Save</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                
+            </Modal>
+
             </div>
         )
     }
