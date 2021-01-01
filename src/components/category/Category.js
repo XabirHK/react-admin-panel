@@ -17,6 +17,16 @@ import { Loader } from '../../vibe/';
 import AddCategry from "./AddCategory";
 import ListCategory from "./ListCatagiry";
 
+const required = value => {
+    if (!value) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          This field is required!
+        </div>
+      );
+    }
+  };
+
 export default class Category extends Component {
     constructor(props) {
         super(props);
@@ -49,6 +59,7 @@ export default class Category extends Component {
 
     saveCategory() {
         console.log('Functin a dhukse');
+        this.loading = true;
         var data = {
             title: this.state.title,
             description: this.state.description,
@@ -72,6 +83,10 @@ export default class Category extends Component {
           .catch(e => {
             console.log(e);
             });
+        
+        this.retrieveCatagories();
+        this.toggle();
+        this.loading = false;
     }
 
     newCategory() {
@@ -165,7 +180,7 @@ export default class Category extends Component {
                                     <CardBody>
                                         <FormGroup>
                                             <Label for="title">Title</Label>
-                                            <Input type="text" name="title" id="title" />
+                                            <Input type="text" name="title" id="title" required/>
                                         </FormGroup>
                                         <FormGroup>
                                             <Label for="description">Description</Label>
@@ -181,7 +196,7 @@ export default class Category extends Component {
                                         <div>
                                         <FormGroup>
                                             <Label for="position">Place</Label>
-                                            <Input type="select" name="position" id="position">
+                                            <Input type="select" name="position" id="position" required>
                                                 <option value='header'>Header</option>
                                                 <option value='footer'>Footer</option>
                                                 <option value='side'>Side Panel</option>
@@ -221,7 +236,7 @@ export default class Category extends Component {
                         </Row>
                     </ModalBody>
                     <ModalFooter>
-                        <Button  color="primary" onClick={this.saveCategory}>Save</Button>{' '}
+                        <Button  color="primary" onClick= {this.saveCategory}>Save</Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 
