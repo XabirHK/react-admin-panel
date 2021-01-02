@@ -10,7 +10,8 @@ class CatagoryDataService {
   }
 
   create(data) {
-    return http.post("/categories", data);
+    console.log("Save service a dhukse");
+    return http.post("/category/add", data);
   }
 
   update(id, data) {
