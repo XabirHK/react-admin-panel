@@ -12,11 +12,11 @@ export default {
       children: [
         {
           name: 'Catagories',
-          url: '/catagory',
+          url: '/category',
         },
         {
           name: 'Add new catagory',
-          url: '/catagory/add',
+          url: '/newcategory',
         },
         {
           name: 'Alerts',

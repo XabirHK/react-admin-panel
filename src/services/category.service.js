@@ -1,4 +1,6 @@
 import http from "../http-common";
+import qs from "querystring";
+
 
 class CatagoryDataService {
   getAll() {
@@ -10,8 +12,7 @@ class CatagoryDataService {
   }
 
   create(data) {
-    console.log("Save service a dhukse");
-    return http.post("/category/add", data);
+    return http.post("/category/add", qs.stringify(data));
   }
 
   update(id, data) {
