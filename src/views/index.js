@@ -24,6 +24,8 @@ import ErrorPage from './pages/404';
 
 import Category from '../components/category/Category';
 import AddCategory from '../components/category/AddCategory';
+import AddPost from '../components/post/AddPost';
+import Posts from '../components/post/Posts';
 
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
@@ -41,6 +43,16 @@ const pageList = [
     name: 'Add Category',
     path: '/newcategory',
     component: AddCategory,
+  },
+  {
+    name: 'posts',
+    path: '/posts',
+    component: Posts,
+  },
+  {
+    name: 'Add Post',
+    path: '/post/add',
+    component: AddPost,
   },
   {
     name: 'Buttons',

@@ -74,7 +74,7 @@ export default {
       children: [
         {
           name: 'Posts',
-          url: '/post/list',
+          url: '/posts',
         },
         {
           name: 'Add new post',

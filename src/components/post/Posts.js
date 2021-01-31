@@ -13,13 +13,14 @@ import {
     Modal, 
 } from 'reactstrap';
 import CategoryDataService from "../../services/category.service.js";
+import PostDataService from "../../services/post.service.js";
 import { Loader } from '../../vibe/';
-import AddCategory from "./AddCategory";
+//import AddCategory from "./AddCategory";
 
-export default class Category extends Component {
+export default class Posts extends Component {
     constructor(props) {
         super(props);
-        this.retrieveCatagories = this.retrieveCatagories.bind(this);
+        this.retrievePosts = this.retrievePosts.bind(this);
         //this.saveCategory = this.saveCategory.bind(this);
         this.state = {
             modal: false,
@@ -30,15 +31,15 @@ export default class Category extends Component {
     }
 
     componentDidMount() {
-        this.retrieveCatagories();
+        this.retrievePosts();
         this.loading = false;
     }
 
-    retrieveCatagories() {
-        CategoryDataService.getAll()
+    retrievePosts() {
+        PostDataService.getAll()
         .then(response => {
         this.setState({
-            catagories: response.data
+            posts: response.data
         });
             //console.log(response.data);
         })
@@ -59,14 +60,14 @@ export default class Category extends Component {
      }
 
     toggle() {
-        this.props.history.push('/newcategory');
+        this.props.history.push('/post/add');
     }
     
     render() {
-        const { catagories} = this.state;
+        const { posts} = this.state;
         return (
             <div>
-                <h3 className="m-b">Current Catagories</h3>
+                <h3 className="m-b">Current Posts</h3>
                 <Row>
                     { this.renderLoader() }
                     <Col md="2" style={{ margin: "0", padding: "0", marginLeft: "auto" }}>
@@ -87,25 +88,19 @@ export default class Category extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {catagories && catagories.map((catagory, i) => (
-                            <tr key = {catagory.categoryId}>
+                            {posts && posts.map((post, i) => (
+                            <tr key = {post.postId}>
                                 <td>{++i}</td>
-                                <td>{catagory.title}</td>
-                                <td>{catagory.position}</td>
-                                <td>{catagory.parent}</td>
-                                <td>{catagory.language}</td>
+                                <td>{post.title}</td>
+                                <td>{post.category}</td>
+                                <td>{post.status}</td>
+                                <td>{post.language}</td>
                             </tr>
                             ))}
                         </tbody>
                     </Table>
                 </CardBody>
                 </Card>
-
-                <div>
-                    <Modal className="submit-form" isOpen={this.state.modal} toggle={Category.toggle}>
-                        <AddCategory></AddCategory>
-                    </Modal>    
-                </div>
 
             </div>
         )
