@@ -85,6 +85,7 @@ export default class Posts extends Component {
                                 <th>Position</th>
                                 <th>Parent</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,6 +96,10 @@ export default class Posts extends Component {
                                 <td>{post.category}</td>
                                 <td>{post.status}</td>
                                 <td>{post.language}</td>
+                                <td>
+                                    <Button color="success" size="sm"><i className="fa fa-edit"></i></Button>{' '}
+                                    <Button color="danger"size="sm"><i className="fa fa-trash"></i></Button>
+                                </td>
                             </tr>
                             ))}
                         </tbody>

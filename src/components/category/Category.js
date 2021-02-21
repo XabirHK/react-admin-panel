@@ -20,13 +20,32 @@ export default class Category extends Component {
     constructor(props) {
         super(props);
         this.retrieveCatagories = this.retrieveCatagories.bind(this);
+        this.deleteCategorye = this.deleteCategorye.bind(this);
+        this.editCategory = this.editCategory.bind(this);
+        this.addCategorye = this.addCategorye.bind(this);
         //this.saveCategory = this.saveCategory.bind(this);
         this.state = {
             modal: false,
+            catagories: [],
         };
 
         this.toggle = this.toggle.bind(this);
         this.loading = true;
+    }
+
+    addCategorye(){
+        this.props.history.push('/category/add/_add');
+    }
+
+
+    deleteCategorye(id){
+        CategoryDataService.delete(id).then( res => {
+            this.setState({catagories: this.state.catagories.filter(catagory => catagory.categoryId !== id)});
+        });
+    }
+    
+    editCategory(id){
+        this.props.history.push(`/category/add/${id}`);
     }
 
     componentDidMount() {
@@ -59,11 +78,11 @@ export default class Category extends Component {
      }
 
     toggle() {
-        this.props.history.push('/newcategory');
+        this.props.history.push('/category/add/_add');
     }
     
     render() {
-        const { catagories} = this.state;
+        //const { catagories} = this.state;
         return (
             <div>
                 <h3 className="m-b">Current Catagories</h3>
@@ -84,18 +103,24 @@ export default class Category extends Component {
                                 <th>Position</th>
                                 <th>Parent</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {catagories && catagories.map((catagory, i) => (
+                            {this.state.catagories.map(
+                                        (catagory, i) =>
                             <tr key = {catagory.categoryId}>
                                 <td>{++i}</td>
                                 <td>{catagory.title}</td>
                                 <td>{catagory.position}</td>
                                 <td>{catagory.parent}</td>
                                 <td>{catagory.language}</td>
+                                <td>
+                                    <Button onClick={ () => this.editCategory(catagory.categoryId)} color="primary" size="sm"><i className="fa fa-edit"></i></Button>{' '}
+                                    <Button onClick={ () => {if(window.confirm('Delete the item?')) this.deleteCategorye(catagory.categoryId)}} color="danger"size="sm"><i className="fa fa-trash"></i></Button>
+                                </td>
                             </tr>
-                            ))}
+                            )}
                         </tbody>
                     </Table>
                 </CardBody>

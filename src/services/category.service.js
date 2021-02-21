@@ -8,19 +8,20 @@ class CatagoryDataService {
   }
 
   get(id) {
-    return http.get(`/categories/${id}`);
+    return http.get(`/category/${id}`);
   }
 
   create(data) {
     return http.post("/category/add", qs.stringify(data));
   }
 
-  update(id, data) {
-    return http.put(`/categories/${id}`, data);
+  update(data) {
+    console.log('update a dhukse ' + data);
+    return http.put("/category/update", qs.stringify(data));
   }
 
   delete(id) {
-    return http.delete(`/categories/${id}`);
+    return http.delete(`/category/delete/${id}`);
   }
 
   deleteAll() {

@@ -21,9 +21,10 @@ export default class AddCategory extends Component {
         super(props);
         this.retrieveCatagories = this.retrieveCatagories.bind(this);
         this.saveCategory = this.saveCategory.bind(this);
+        this.saveOrUpdateCategory = this.saveOrUpdateCategory.bind(this);
         this.state = {
             modal: false,
-            id: null,
+            id: this.props.match.params.id,
             title: '',
             description: '', 
             position: '',
@@ -38,8 +39,25 @@ export default class AddCategory extends Component {
     }
 
     componentDidMount() {
+
         this.retrieveCatagories();
-        //this.loading = false;
+        this.loading = false;
+        if(this.state.id === '_add'){
+            return
+        }else{
+            CategoryDataService.get(this.state.id).then( (res) =>{
+                let category = res.data;
+
+                this.setState({
+                    title: category.title,
+                    description: category.description,
+                    position: category.position,
+                    status: category.status,
+                    parent: category.parent,
+                    language: category.language,
+                });
+            });
+        } 
     }
     
     changeTitleHandler= (event) => {
@@ -59,6 +77,30 @@ export default class AddCategory extends Component {
     }
 
 
+    saveOrUpdateCategory = (e) => {
+        e.preventDefault();
+        let category = {
+            //categoryId: this.state.id, 
+            title: this.state.title,
+            description: this.state.description,
+            position: this.state.position,
+            status: this.state.status,
+            parent: this.state.parent,
+            language: this.state.language,
+        };
+        if(this.state.id === '_add'){
+            CategoryDataService.create(category).then(res =>{
+                this.props.history.push('/categories');
+            });
+        }else{
+            category.categoryId = this.state.id;
+            CategoryDataService.update(category).then(res =>{
+                this.props.history.push('/categories');
+            });
+        }
+    }
+
+
     saveCategory = (e) => {
         e.preventDefault();
         let catagory = {
@@ -71,7 +113,7 @@ export default class AddCategory extends Component {
         };
         
         CategoryDataService.create(catagory).then(res =>{
-            this.props.history.push('/category');
+            this.props.history.push('/categories');
         });
         
     }
@@ -84,8 +126,18 @@ export default class AddCategory extends Component {
             });
         })
         .catch(e => {
-            console.log(e);
+
+            //console.log(e);
         });
+    }
+
+
+    getPageTitle(){
+        if(this.state.id === '_add'){
+            return <h3 className="text-center">Add Category</h3>
+        }else{
+            return <h3 className="text-center">Update Category</h3>
+        }
     }
 
     
@@ -94,84 +146,85 @@ export default class AddCategory extends Component {
         return (
             
             <div>
-                <ModalHeader toggle={this.toggle}>Add a new Category</ModalHeader>
-                <ModalBody>
-                    <Row>
-                        <Col md={8}>
-                            <Card>
-                                <CardBody>
-                                    <FormGroup>
-                                        <Label for="title">Title</Label>
-                                        <Input type="text" name="title" id="title" required
-                                        defaultValue={this.state.title} onChange={this.changeTitleHandler}/>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="description">Description</Label>
-                                        <Input type="textarea" name="description" id="description" style={{height: 359}}
-                                        defaultValue={this.state.description} onChange={this.changeDescriptionHandler} />
-                                    </FormGroup>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col md={4}>
-                            {/* <Button block className="m-b">Position of the Category</Button> */}
-                            <Card>
-                                <CardBody>
-                                    <div>
-                                    <FormGroup>
-                                        <Label for="position">Place</Label>
-                                        <Input type="select" name="position" id="position" required
-                                        defaultValue={this.state.position} onChange={this.changePositionHandler}>
-                                            <option value='header'>Header</option>
-                                            <option value='footer'>Footer</option>
-                                            <option value='side'>Side Panel</option>
-                                            <option value='null' defaultChecked>Unpublished</option>
-                                        </Input>
-                                    </FormGroup>
-                                    </div>
-                                </CardBody>
-                            </Card>
-                            
-                            <Card>
-                                <CardBody>
-                                    <div>
-                                    <FormGroup>
-                                        <Label for="parent">Parent</Label>
-                                        <Input type="select" name="parent" id="parent"
-                                        defaultValue={this.state.parent} onChange={this.changeParentHandler}>
-                                        <option defaultChecked value='0'>No Parent</option>
-                                        {catagories && catagories.map((catagory) => (
-                                            <option key = {catagory.categoryId} value={catagory.categoryId}> { catagory.title } </option>
-                                        ))}
-                                        </Input>
-                                    </FormGroup>
-                                    </div>
-                                </CardBody>
-                            </Card>
+                {/* <form> */}
+                    <ModalHeader>{this.getPageTitle()}</ModalHeader>
+                    <ModalBody>
+                        <Row>
+                            <Col md={8}>
+                                <Card>
+                                    <CardBody>
+                                        <FormGroup>
+                                            <Label for="title">Title</Label>
+                                            <Input type="text" name="title" id="title" required
+                                            value={this.state.title} onChange={this.changeTitleHandler}/>
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label for="description">Description</Label>
+                                            <Input type="textarea" name="description" id="description" style={{height: 359}}
+                                            value={this.state.description} onChange={this.changeDescriptionHandler} />
+                                        </FormGroup>
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                            <Col md={4}>
+                                {/* <Button block className="m-b">Position of the Category</Button> */}
+                                <Card>
+                                    <CardBody>
+                                        <div>
+                                        <FormGroup>
+                                            <Label for="position">Place</Label>
+                                            <Input type="select" name="position" id="position" required
+                                            value={this.state.position} onChange={this.changePositionHandler}>
+                                                <option value=''>Select</option>
+                                                <option value='header'>Header</option>
+                                                <option value='footer'>Footer</option>
+                                                <option value='side'>Side Panel</option>
+                                            </Input>
+                                        </FormGroup>
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                                
+                                <Card>
+                                    <CardBody>
+                                        <div>
+                                        <FormGroup>
+                                            <Label for="parent">Parent</Label>
+                                            <Input type="select" name="parent" id="parent"
+                                            value={this.state.parent} onChange={this.changeParentHandler}>
+                                            <option defaultChecked value='0'>No Parent</option>
+                                            {catagories && catagories.map((catagory) => (
+                                                <option key = {catagory.categoryId} value={catagory.categoryId}> { catagory.title } </option>
+                                            ))}
+                                            </Input>
+                                        </FormGroup>
+                                        </div>
+                                    </CardBody>
+                                </Card>
 
-                            <Card>
-                                <CardBody>
-                                    <div>
-                                    <FormGroup>
-                                        <Label for="position">Status</Label>
-                                        <Input type="select" name="status" id="position" required
-                                        defaultValue={this.state.status} onChange={this.changeStatusHandler}>
-                                            <option value='1'>Enabled</option>
-                                            <option value='0'>Disabled</option>
-                                        </Input>
-                                    </FormGroup>
-                                    </div>
-                                </CardBody>
-                            </Card>                
-                        </Col>
-                    </Row>
-                </ModalBody>
-                <ModalFooter>
-                    <Button  color="primary" onClick= {this.saveCategory}>Save</Button>{' '}
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                </ModalFooter>  
-                    
-                       
+                                <Card>
+                                    <CardBody>
+                                        <div>
+                                        <FormGroup>
+                                            <Label for="position">Status</Label>
+                                            <Input type="select" name="status" id="position" required
+                                            value={this.state.status} onChange={this.changeStatusHandler}>
+                                                <option value='1'>Enabled</option>
+                                                <option value='0'>Disabled</option>
+                                            </Input>
+                                        </FormGroup>
+                                        </div>
+                                    </CardBody>
+                                </Card>                
+                            </Col>
+                        </Row>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button  color="primary" onClick= {this.saveOrUpdateCategory}>Save</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+
+                {/* </form>       */}
             </div>
         )
     }

@@ -35,13 +35,13 @@ const pageList = [
     component: Analytics,
   },
   {
-    name: 'Category',
-    path: '/category',
+    name: 'Categories',
+    path: '/categories',
     component: Category,
   },
   {
-    name: 'Add Category',
-    path: '/newcategory',
+    name: 'Category',
+    path: '/category/add/:id',
     component: AddCategory,
   },
   {
@@ -51,7 +51,7 @@ const pageList = [
   },
   {
     name: 'Add Post',
-    path: '/post/add',
+    path: '/post/add/:id',
     component: AddPost,
   },
   {
