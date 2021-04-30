@@ -16,7 +16,6 @@ class CatagoryDataService {
   }
 
   update(data) {
-    console.log('update a dhukse ' + data);
     return http.put("/category/update", qs.stringify(data));
   }
 

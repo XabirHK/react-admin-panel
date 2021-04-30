@@ -14,12 +14,12 @@ class PostDataService {
     return http.post("/post/add", qs.stringify(data));
   }
 
-  update(id, data) {
-    return http.put(`/post/${id}`, data);
+  update(data) {
+    return http.put(`/post/update`, qs.stringify(data));
   }
 
   delete(id) {
-    return http.delete(`/post/${id}`);
+    return http.delete(`/post/delete/${id}`);
   }
 
   deleteAll() {
@@ -29,6 +29,7 @@ class PostDataService {
   findByTitle(title) {
     return http.get(`/post?title=${title}`);
   }
+
 }
 
 export default new PostDataService();

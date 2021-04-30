@@ -94,6 +94,7 @@ export default class AddCategory extends Component {
             });
         }else{
             category.categoryId = this.state.id;
+            console.log(category);
             CategoryDataService.update(category).then(res =>{
                 this.props.history.push('/categories');
             });

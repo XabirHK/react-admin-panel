@@ -45,7 +45,7 @@ const pageList = [
     component: AddCategory,
   },
   {
-    name: 'posts',
+    name: 'Posts',
     path: '/posts',
     component: Posts,
   },

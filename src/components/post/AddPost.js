@@ -22,11 +22,12 @@ export default class AddPost extends Component {
     constructor(props) {
         super(props);
         this.retrieveCatagories = this.retrieveCatagories.bind(this);
-        this.savePost = this.savePost.bind(this);
+        // this.savePost = this.savePost.bind(this);
+        this.clickCancelButton = this.clickCancelButton.bind(this);
         // this.onDrop = this.onDrop.bind(this);
         this.state = {
             modal: false,
-            id: null,
+            id: this.props.match.params.id,
             title: '',
             description: '', 
             tags: '',
@@ -43,8 +44,26 @@ export default class AddPost extends Component {
 
     componentDidMount() {
         this.retrieveCatagories();
-        //this.loading = false;
+        this.loading = false;
+
+        if(this.state.id === '_add'){
+            return
+        }else{
+            PostDataService.get(this.state.id).then( (res) =>{
+                let post = res.data;
+                this.setState({
+                    title: post.title,
+                    description: post.description,
+                    category: post.category,
+                    status: post.status,
+                    tags: post.tags,
+                    language: post.language,
+                    primaryPicture: post.primaryPicture,
+                });
+            });
+        }
     }
+
     
     changeTitleHandler= (event) => {
         this.setState({title: event.target.value});
@@ -72,7 +91,26 @@ export default class AddPost extends Component {
     //     });
     // }
 
-    savePost = (e) => {
+    // savePost = (e) => {
+    //     e.preventDefault();
+    //     let post = {
+    //         title: this.state.title,
+    //         description: this.state.description,
+    //         category: this.state.category,
+    //         status: this.state.status,
+    //         tags: this.state.tags,
+    //         language: this.state.language,
+    //         primaryPicture: this.state.primaryPicture,
+    //     };
+        
+    //     PostDataService.create(post).then(res =>{
+    //         this.props.history.push('/posts');
+    //         //console.log(post);
+    //     });  
+    // }
+
+
+    saveOrUpdatePost = (e) => {
         e.preventDefault();
         let post = {
             title: this.state.title,
@@ -83,12 +121,18 @@ export default class AddPost extends Component {
             language: this.state.language,
             primaryPicture: this.state.primaryPicture,
         };
-        
-        PostDataService.create(post).then(res =>{
-            this.props.history.push('/posts');
-            //console.log(post);
-        });  
+        if(this.state.id === '_add'){
+            PostDataService.create(post).then(res =>{
+                this.props.history.push('/posts');
+            });
+        }else{
+            post.id = this.state.id;
+            PostDataService.update(post).then(res =>{
+                this.props.history.push('/posts');
+            });
+        }
     }
+
 
     retrieveCatagories() {
         CategoryDataService.getAll()
@@ -102,9 +146,24 @@ export default class AddPost extends Component {
         });
     }
 
+    getPageTitle(){
+        if(this.state.id === '_add'){
+            return <h3 className="text-center">Add Post</h3>
+        }else{
+            return <h3 className="text-center">Update Post</h3>
+        }
+    }
+
+    clickCancelButton(){
+        this.props.history.push('/posts');
+    }
+
     
     render() {
         const { catagories } = this.state;
+        var ttParagraph = 'Please use <p> </p> for paragraph';
+        var ttBold = 'Please use <b> </b> for Bold';
+        var ttImage = 'Please use <Img> </Img> for inserting image i.e. <Img>http://imagelink.com</Img> ';
         return (
             <div>
                 <Row>
@@ -118,8 +177,10 @@ export default class AddPost extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Description</Label>
-                                    <Input type="textarea" name="description" id="description" style={{height: 645}}
-                                    defaultValue={this.state.description} onChange={this.changeDescriptionHandler} />
+                                    <small className="text-muted">{ttParagraph}<br></br> {ttBold}<br></br> {ttImage}</small>
+                                    <p> </p>
+                                    <Input type="textarea" name="description" id="description" style={{height: 550}}
+                                    value={this.state.description} onChange={this.changeDescriptionHandler} />
                                 </FormGroup>
                             </CardBody>
                         </Card>
@@ -130,12 +191,12 @@ export default class AddPost extends Component {
                             <CardBody>
                                 <div>
                                 <FormGroup>
-                                    <Label for="category">Category</Label>
+                                    <Label for="parent">Parent</Label>
                                     <Input type="select" name="category" id="category"
-                                    defaultValue={this.state.parent} onChange={this.changeCategoryHandler}>
+                                    value={this.state.category} onChange={this.changeCategoryHandler}>
                                     <option defaultChecked value='0'>Miscellaneous</option>
-                                    {catagories && catagories.map((catagory) => (
-                                        <option key = {catagory.categoryId} value={catagory.categoryId}> { catagory.title } </option>
+                                    {catagories && catagories.map((pCatagory) => (
+                                        <option key = {pCatagory.categoryId} value={pCatagory.categoryId}> { pCatagory.title } </option>
                                     ))}
                                     </Input>
                                 </FormGroup>
@@ -183,9 +244,9 @@ export default class AddPost extends Component {
                             <CardBody>
                                 <div>
                                 <FormGroup>
-                                    <Label for="status">Status</Label>
+                                    <Label for="position">Status</Label>
                                     <Input type="select" name="status" id="status" required
-                                    defaultValue={this.state.status} onChange={this.changeStatusHandler}>
+                                    value={this.state.status} onChange={this.changeStatusHandler}>
                                         <option value='1'>Enabled</option>
                                         <option value='0'>Disabled</option>
                                     </Input>
@@ -197,8 +258,8 @@ export default class AddPost extends Component {
                     </Col>
                 </Row>
 
-                <Button  color="primary" onClick= {this.savePost}>Save</Button>{' '}
-                <Button color="secondary" onClick={this.toggle}>Cancel</Button>       
+                <Button  color="primary" onClick= {this.saveOrUpdatePost}>Save</Button>{' '}
+                <Button color="secondary" onClick={this.clickCancelButton}>Cancel</Button>       
             </div>
         )
     }

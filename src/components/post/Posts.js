@@ -21,9 +21,12 @@ export default class Posts extends Component {
     constructor(props) {
         super(props);
         this.retrievePosts = this.retrievePosts.bind(this);
-        //this.saveCategory = this.saveCategory.bind(this);
+        this.retrieveCatagories = this.retrieveCatagories.bind(this);
+        this.deletePost = this.deletePost.bind(this);
+        this.editPost = this.editPost.bind(this);
         this.state = {
             modal: false,
+            posts: []
         };
 
         this.toggle = this.toggle.bind(this);
@@ -32,6 +35,7 @@ export default class Posts extends Component {
 
     componentDidMount() {
         this.retrievePosts();
+        this.retrieveCatagories();
         this.loading = false;
     }
 
@@ -46,6 +50,29 @@ export default class Posts extends Component {
         .catch(e => {
             console.log(e);
         });
+    }
+
+    retrieveCatagories() {
+        CategoryDataService.getAll()
+        .then(response => {
+            this.setState({
+                catagories: response.data
+            });
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    }
+
+    deletePost(id){
+        console.log('delete post id ' + id);
+        PostDataService.delete(id).then( res => {
+            this.setState({posts: this.state.posts.filter(post => post.id !== id)});
+        });
+    }
+    
+    editPost(id){
+        this.props.history.push(`/post/add/${id}`);
     }
 
     renderLoader(){
@@ -64,14 +91,14 @@ export default class Posts extends Component {
     }
     
     render() {
-        const { posts} = this.state;
+        const { catagories } = this.state;
         return (
             <div>
                 <h3 className="m-b">Current Posts</h3>
                 <Row>
                     { this.renderLoader() }
                     <Col md="2" style={{ margin: "0", padding: "0", marginLeft: "auto" }}>
-                        {/* <Button block color="primary" onClick={this.toggle} >Add New</Button> */}
+                    <Button block color="primary" onClick={this.toggle} >Add New</Button>
                     </Col>
                 </Row>        
                 <hr />
@@ -81,27 +108,31 @@ export default class Posts extends Component {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Title</th>
-                                <th>Position</th>
-                                <th>Parent</th>
+                                <th className="w-25">Title</th>
+                                <th>Category</th>
+                                <th>Image Link</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {posts && posts.map((post, i) => (
-                            <tr key = {post.postId}>
-                                <td>{++i}</td>
+                            
+                            {this.state.posts.map(
+                                        (post, i) =>
+                            <tr key = {post.id}>
+                                <td>{i++}</td>
                                 <td>{post.title}</td>
-                                <td>{post.category}</td>
-                                <td>{post.status}</td>
-                                <td>{post.language}</td>
+                                <td>{catagories && catagories.map((pCatagory) => (
+                                        pCatagory.categoryId == post.category ?  pCatagory.title : ''
+                                    ))}</td>
+                                <td>{post.primaryPicture}</td>
+                                <td>{post.status == 1 ? 'Enabled' : 'Disabled'  }</td>
                                 <td>
-                                    <Button color="success" size="sm"><i className="fa fa-edit"></i></Button>{' '}
-                                    <Button color="danger"size="sm"><i className="fa fa-trash"></i></Button>
+                                <Button onClick={ () => this.editPost(post.id)} color="primary" size="sm"><i className="fa fa-edit"></i></Button>{' '}
+                                <Button onClick={ () => {if(window.confirm('Delete the item?')) this.deletePost(post.id)}} color="danger"size="sm"><i className="fa fa-trash"></i></Button>
                                 </td>
                             </tr>
-                            ))}
+                            )}
                         </tbody>
                     </Table>
                 </CardBody>
