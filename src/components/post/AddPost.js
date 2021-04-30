@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 import ImageUploader from 'react-images-upload';
 
+
 import CategoryDataService from "../../services/category.service.js";
 import PostDataService from "../../services/post.service.js";
 
@@ -22,7 +23,7 @@ export default class AddPost extends Component {
         super(props);
         this.retrieveCatagories = this.retrieveCatagories.bind(this);
         this.savePost = this.savePost.bind(this);
-        this.onDrop = this.onDrop.bind(this);
+        // this.onDrop = this.onDrop.bind(this);
         this.state = {
             modal: false,
             id: null,
@@ -31,7 +32,8 @@ export default class AddPost extends Component {
             tags: '',
             status: 0,
             language:1,
-            pictures: [],
+            primaryPicture: '',
+            // pictures: [],
             submitted: false 
         };
 
@@ -60,11 +62,15 @@ export default class AddPost extends Component {
         this.setState({tags: event.target.value});
     }
 
-    onDrop(picture) {
-        this.setState({
-            pictures: this.state.pictures.concat(picture),
-        });
+    changePrimaryPictureHandler= (event) => {
+        this.setState({primaryPicture: event.target.value});
     }
+
+    // onDrop(picture) {
+    //     this.setState({
+    //         pictures: this.state.pictures.concat(picture),
+    //     });
+    // }
 
     savePost = (e) => {
         e.preventDefault();
@@ -75,7 +81,7 @@ export default class AddPost extends Component {
             status: this.state.status,
             tags: this.state.tags,
             language: this.state.language,
-            primaryPicture: this.state.pictures[0]['name'],
+            primaryPicture: this.state.primaryPicture,
         };
         
         PostDataService.create(post).then(res =>{
@@ -136,7 +142,7 @@ export default class AddPost extends Component {
                                 </div>
                             </CardBody>
                         </Card>
-                        <Card>
+                        {/* <Card>
                             <CardBody>
                                 <div>
                                 <FormGroup>
@@ -152,6 +158,15 @@ export default class AddPost extends Component {
                                     />
                                 </FormGroup>
                                 </div>
+                            </CardBody>
+                        </Card> */}
+                        <Card>
+                            <CardHeader>Image Link</CardHeader>
+                            <CardBody>
+                                <FormGroup>
+                                    <Input type="text" name="primaryPicture" id="primaryPicture" 
+                                    defaultValue={this.state.primaryPicture} onChange={this.changePrimaryPictureHandler}/>
+                                </FormGroup>
                             </CardBody>
                         </Card>
                         <Card>
