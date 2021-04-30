@@ -18,54 +18,54 @@ export default {
           name: 'Add new catagory',
           url: '/category/add/:id',
         },
-        {
-          name: 'Alerts',
-          url: '/elements/alerts',
-        },
-        {
-          name: 'Typography',
-          url: '/elements/typography',
-        },
-        {
-          name: 'Cards',
-          url: '/elements/cards',
-        },
-        {
-          name: 'Tabs',
-          url: '/elements/tabs',
-        },
-        {
-          name: 'Tables',
-          url: '/elements/tables',
-        },
-        {
-          name: 'Breadcrumbs',
-          url: '/elements/breadcrumbs',
-        },
-        {
-          name: 'Forms',
-          url: '/elements/forms',
-        },
-        {
-          name: 'Modals',
-          url: '/elements/modals',
-        },
-        {
-          name: 'Loaders',
-          url: '/elements/loaders',
-        },
-        {
-          name: 'Avatars',
-          url: '/elements/avatars',
-        },
-        {
-          name: 'Progress Bars',
-          url: '/elements/progressbars',
-        },
-        {
-          name: 'Pagination',
-          url: '/elements/pagination',
-        },
+        // {
+        //   name: 'Alerts',
+        //   url: '/elements/alerts',
+        // },
+        // {
+        //   name: 'Typography',
+        //   url: '/elements/typography',
+        // },
+        // {
+        //   name: 'Cards',
+        //   url: '/elements/cards',
+        // },
+        // {
+        //   name: 'Tabs',
+        //   url: '/elements/tabs',
+        // },
+        // {
+        //   name: 'Tables',
+        //   url: '/elements/tables',
+        // },
+        // {
+        //   name: 'Breadcrumbs',
+        //   url: '/elements/breadcrumbs',
+        // },
+        // {
+        //   name: 'Forms',
+        //   url: '/elements/forms',
+        // },
+        // {
+        //   name: 'Modals',
+        //   url: '/elements/modals',
+        // },
+        // {
+        //   name: 'Loaders',
+        //   url: '/elements/loaders',
+        // },
+        // {
+        //   name: 'Avatars',
+        //   url: '/elements/avatars',
+        // },
+        // {
+        //   name: 'Progress Bars',
+        //   url: '/elements/progressbars',
+        // },
+        // {
+        //   name: 'Pagination',
+        //   url: '/elements/pagination',
+        // },
       ],
     },
     {
@@ -78,7 +78,7 @@ export default {
         },
         {
           name: 'Add new post',
-          url: '/post/add',
+          url: '/post/add/:id',
         },
         // {
         //   name: 'Blank',

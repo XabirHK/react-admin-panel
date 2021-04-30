@@ -20,8 +20,8 @@ export default class AddCategory extends Component {
     constructor(props) {
         super(props);
         this.retrieveCatagories = this.retrieveCatagories.bind(this);
-        this.saveCategory = this.saveCategory.bind(this);
         this.saveOrUpdateCategory = this.saveOrUpdateCategory.bind(this);
+        this.clickCancelButton = this.clickCancelButton.bind(this);
         this.state = {
             modal: false,
             id: this.props.match.params.id,
@@ -100,22 +100,8 @@ export default class AddCategory extends Component {
         }
     }
 
-
-    saveCategory = (e) => {
-        e.preventDefault();
-        let catagory = {
-            title: this.state.title,
-            description: this.state.description,
-            position: this.state.position,
-            status: this.state.status,
-            parent: this.state.parent,
-            language: this.state.language,
-        };
-        
-        CategoryDataService.create(catagory).then(res =>{
-            this.props.history.push('/categories');
-        });
-        
+    clickCancelButton(){
+        this.props.history.push('/categories');
     }
 
     retrieveCatagories() {
@@ -221,7 +207,7 @@ export default class AddCategory extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button  color="primary" onClick= {this.saveOrUpdateCategory}>Save</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                        <Button color="secondary" onClick={this.clickCancelButton}>Cancel</Button>
                     </ModalFooter>
 
                 {/* </form>       */}

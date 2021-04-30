@@ -67,7 +67,6 @@ export default class AddPost extends Component {
     }
 
     savePost = (e) => {
-        console.log('save post e dhukse');
         e.preventDefault();
         let post = {
             title: this.state.title,

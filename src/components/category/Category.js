@@ -114,7 +114,7 @@ export default class Category extends Component {
                                 <td>{catagory.title}</td>
                                 <td>{catagory.position}</td>
                                 <td>{catagory.parent}</td>
-                                <td>{catagory.language}</td>
+                                <td>{catagory.status}</td>
                                 <td>
                                     <Button onClick={ () => this.editCategory(catagory.categoryId)} color="primary" size="sm"><i className="fa fa-edit"></i></Button>{' '}
                                     <Button onClick={ () => {if(window.confirm('Delete the item?')) this.deleteCategorye(catagory.categoryId)}} color="danger"size="sm"><i className="fa fa-trash"></i></Button>

@@ -8,6 +8,7 @@ import AuthService from "./services/auth.service";
 import {ProtectedRoute} from "./services/protected.route";
 
 import Login from "./components/login.component";
+import SignUp from "./components/register.component";
 
 class App extends Component {
   constructor(props) {
@@ -113,6 +114,7 @@ class App extends Component {
           <Switch> 
             <Route exact path='/' component={Login} />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={SignUp} />
             <ProtectedRoute component={DashboardLayout} />
           </Switch>
         </div>

@@ -60,7 +60,7 @@ export default class Posts extends Component {
      }
 
     toggle() {
-        this.props.history.push('/post/add');
+        this.props.history.push('/post/add/_add');
     }
     
     render() {
@@ -71,7 +71,7 @@ export default class Posts extends Component {
                 <Row>
                     { this.renderLoader() }
                     <Col md="2" style={{ margin: "0", padding: "0", marginLeft: "auto" }}>
-                        <Button block color="primary" onClick={this.toggle} >Add New</Button>
+                        {/* <Button block color="primary" onClick={this.toggle} >Add New</Button> */}
                     </Col>
                 </Row>        
                 <hr />
