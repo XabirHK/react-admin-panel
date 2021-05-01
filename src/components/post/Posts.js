@@ -110,7 +110,7 @@ export default class Posts extends Component {
                                 <th>#</th>
                                 <th className="w-25">Title</th>
                                 <th>Category</th>
-                                <th>Image Link</th>
+                                {/* <th>Image Link</th> */}
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -120,12 +120,12 @@ export default class Posts extends Component {
                             {this.state.posts.map(
                                         (post, i) =>
                             <tr key = {post.id}>
-                                <td>{i++}</td>
+                                <td>{++i}</td>
                                 <td>{post.title}</td>
                                 <td>{catagories && catagories.map((pCatagory) => (
                                         pCatagory.categoryId == post.category ?  pCatagory.title : ''
                                     ))}</td>
-                                <td>{post.primaryPicture}</td>
+                                {/* <td>{post.primaryPicture}</td> */}
                                 <td>{post.status == 1 ? 'Enabled' : 'Disabled'  }</td>
                                 <td>
                                 <Button onClick={ () => this.editPost(post.id)} color="primary" size="sm"><i className="fa fa-edit"></i></Button>{' '}
