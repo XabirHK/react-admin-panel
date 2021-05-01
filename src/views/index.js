@@ -23,6 +23,9 @@ import PaginationPage from './elements/Pagination';
 import ErrorPage from './pages/404';
 
 import Category from '../components/category/Category';
+import AddCategory from '../components/category/AddCategory';
+import AddPost from '../components/post/AddPost';
+import Posts from '../components/post/Posts';
 
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
@@ -32,9 +35,24 @@ const pageList = [
     component: Analytics,
   },
   {
-    name: 'Category',
-    path: '/catagory',
+    name: 'Categories',
+    path: '/categories',
     component: Category,
+  },
+  {
+    name: 'Category',
+    path: '/category/add/:id',
+    component: AddCategory,
+  },
+  {
+    name: 'Posts',
+    path: '/posts',
+    component: Posts,
+  },
+  {
+    name: 'Add Post',
+    path: '/post/add/:id',
+    component: AddPost,
   },
   {
     name: 'Buttons',

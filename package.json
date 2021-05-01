@@ -17,6 +17,7 @@
     "react-dom": "^16.8.1",
     "react-feather": "^1.1.6",
     "react-fontawesome": "1.6.1",
+    "react-images-upload": "^1.2.8",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^4.0.1",
     "react-validation": "^3.0.7",
@@ -39,7 +40,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "redux": "^4.0.5"
   }
 }
