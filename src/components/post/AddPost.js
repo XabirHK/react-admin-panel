@@ -191,7 +191,7 @@ export default class AddPost extends Component {
                             <CardBody>
                                 <div>
                                 <FormGroup>
-                                    <Label for="parent">Parent</Label>
+                                    <Label for="parent">Category</Label>
                                     <Input type="select" name="category" id="category"
                                     value={this.state.category} onChange={this.changeCategoryHandler}>
                                     <option defaultChecked value='0'>Miscellaneous</option>
