@@ -161,9 +161,9 @@ export default class AddPost extends Component {
     
     render() {
         const { catagories } = this.state;
-        var ttParagraph = 'Please use <p> </p> for paragraph';
-        var ttBold = 'Please use <b> </b> for Bold';
-        var ttImage = 'Please use <Img> </Img> for inserting image i.e. <Img>http://imagelink.com</Img> ';
+        var ttParagraph = 'Please use <p> YOUR PARAGRAPH </p> for paragraph';
+        var ttBold = 'Please use <b> THE BOLD TITLE </b> for Bold';
+        var ttImage = 'Please use <img src ="YOUR IMAGE LINK" ></img> for inserting image ';
         return (
             <div>
                 <Row>
