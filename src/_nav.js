@@ -16,7 +16,7 @@ export default {
         },
         {
           name: 'Add new catagory',
-          url: '/category/add/:id',
+          url: '/category/add/_add',
         },
         // {
         //   name: 'Alerts',
@@ -78,7 +78,7 @@ export default {
         },
         {
           name: 'Add new post',
-          url: '/post/add/:id',
+          url: '/post/add/_add',
         },
         // {
         //   name: 'Blank',
