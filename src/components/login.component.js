@@ -4,6 +4,8 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 import AuthService from "../services/auth.service";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const required = value => {
   if (!value) {
@@ -84,12 +86,6 @@ export default class Login extends Component {
       
       <div className="col-md-12 loginCard bgImg">
         <div className="card card-container">
-          {/* <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          /> */}
-
           <Form
             onSubmit={this.handleLogin}
             ref={c => {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "querystring";
 
-const API_URL = "https://nischintopur-service.herokuapp.com/api/auth/";
+const API_URL = process.env.REACT_APP_API_URL + 'api/auth/';
 const config = {
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'

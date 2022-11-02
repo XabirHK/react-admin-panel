@@ -3,17 +3,13 @@ import {
     Row,
     Col,
     Card,
-    CardHeader,
     CardBody,
     FormGroup,
     Label,
     Input,
-    Button,
-    Table,
-    Modal, ModalHeader, ModalBody, ModalFooter,
+    Button, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
 
-import Category from './Category';
 import CategoryDataService from "../../services/category.service.js";
 
 export default class AddCategory extends Component {

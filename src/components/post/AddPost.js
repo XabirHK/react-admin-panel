@@ -9,11 +9,10 @@ import {
     Label,
     Input,
     Button,
-    Table,
-    Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
-import ImageUploader from 'react-images-upload';
-
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { convertFromHTML, EditorState, ContentState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 
 import CategoryDataService from "../../services/category.service.js";
 import PostDataService from "../../services/post.service.js";
@@ -22,19 +21,20 @@ export default class AddPost extends Component {
     constructor(props) {
         super(props);
         this.retrieveCatagories = this.retrieveCatagories.bind(this);
-        // this.savePost = this.savePost.bind(this);
         this.clickCancelButton = this.clickCancelButton.bind(this);
         // this.onDrop = this.onDrop.bind(this);
+
         this.state = {
             modal: false,
             id: this.props.match.params.id,
             title: '',
             description: '', 
+            editorState: EditorState.createEmpty(),
             tags: '',
             status: 0,
             language:1,
             primaryPicture: '',
-            // pictures: [],
+            pictures: [],
             submitted: false 
         };
 
@@ -51,9 +51,14 @@ export default class AddPost extends Component {
         }else{
             PostDataService.get(this.state.id).then( (res) =>{
                 let post = res.data;
+                console.log(post.description)
+
+                const blocksFromHTML = convertFromHTML(post.description);
+                const contentState = ContentState.createFromBlockArray(blocksFromHTML);
                 this.setState({
                     title: post.title,
                     description: post.description,
+                    editorState:  EditorState.createWithContent(contentState),
                     category: post.category,
                     status: post.status,
                     tags: post.tags,
@@ -68,9 +73,9 @@ export default class AddPost extends Component {
     changeTitleHandler= (event) => {
         this.setState({title: event.target.value});
     }
-    changeDescriptionHandler= (event) => {
-        this.setState({description: event.target.value});
-    }
+    // changeDescriptionHandler= (event) => {
+    //     this.setState({description: event.target.value});
+    // }
     changeCategoryHandler= (event) => {
         this.setState({category: event.target.value});
     }
@@ -84,6 +89,14 @@ export default class AddPost extends Component {
     changePrimaryPictureHandler= (event) => {
         this.setState({primaryPicture: event.target.value});
     }
+
+    onEditorStateChange =  (editorState) => {
+        // console.log(editorState.getCurrentContent().getPlainText('\u0001'));
+        this.setState({
+          editorState,
+          description: editorState.getCurrentContent().getPlainText('\u0001')
+        });
+      };
 
     // onDrop(picture) {
     //     this.setState({
@@ -112,6 +125,7 @@ export default class AddPost extends Component {
 
     saveOrUpdatePost = (e) => {
         e.preventDefault();
+        console.log(this.state.description);
         let post = {
             title: this.state.title,
             description: this.state.description,
@@ -158,12 +172,16 @@ export default class AddPost extends Component {
         this.props.history.push('/posts');
     }
 
-    
     render() {
         const { catagories } = this.state;
-        var ttParagraph = 'Please use <p> YOUR PARAGRAPH </p> for paragraph';
-        var ttBold = 'Please use <b> THE BOLD TITLE </b> for Bold';
-        var ttImage = 'Please use <img src ="YOUR IMAGE LINK" ></img> for inserting image ';
+        const wrapperStyle = {
+            border: '1px solid #969696',
+            backgroundColor: 'white',
+        }
+        const editorStyle = {
+            height:'30rem',
+            padding:'1rem'
+        }
         return (
             <div>
                 <Row>
@@ -177,10 +195,14 @@ export default class AddPost extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Description</Label>
-                                    <small className="text-muted">{ttParagraph}<br></br> {ttBold}<br></br> {ttImage}</small>
+                                    {/* <small className="text-muted">{ttParagraph}<br></br> {ttBold}<br></br> {ttImage}</small> */}
                                     <p> </p>
-                                    <Input type="textarea" name="description" id="description" style={{height: 550}}
-                                    value={this.state.description} onChange={this.changeDescriptionHandler} />
+                                    <Editor className="rdw-option-wrapper"
+                                        editorState={this.state.editorState}
+                                        wrapperStyle={wrapperStyle}
+                                        editorStyle={editorStyle}      
+                                        onEditorStateChange={this.onEditorStateChange}
+                                    />
                                 </FormGroup>
                             </CardBody>
                         </Card>
