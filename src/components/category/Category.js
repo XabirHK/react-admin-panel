@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import {
     Row,
     Col,
-    CardHeader,
-    FormGroup,
-    Label,
-    Input,
     Button,
     Card,
     CardBody,
@@ -23,7 +19,7 @@ export default class Category extends Component {
         this.deleteCategorye = this.deleteCategorye.bind(this);
         this.editCategory = this.editCategory.bind(this);
         this.addCategorye = this.addCategorye.bind(this);
-        //this.saveCategory = this.saveCategory.bind(this);
+
         this.state = {
             modal: false,
             catagories: [],
@@ -114,7 +110,7 @@ export default class Category extends Component {
                                 <td>{catagory.title}</td>
                                 <td>{catagory.position}</td>
                                 <td>{catagory.parent}</td>
-                                <td>{catagory.status == 1 ? 'Enabled' : 'Disabled'  }</td>
+                                <td>{catagory.status === 1 ? 'Enabled' : 'Disabled'  }</td>
                                 <td>
                                     <Button onClick={ () => this.editCategory(catagory.categoryId)} color="primary" size="sm"><i className="fa fa-edit"></i></Button>{' '}
                                     <Button onClick={ () => {if(window.confirm('Delete the item?')) this.deleteCategorye(catagory.categoryId)}} color="danger"size="sm"><i className="fa fa-trash"></i></Button>

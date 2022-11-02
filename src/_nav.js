@@ -1,4 +1,4 @@
-export default {
+const Nav = {
   top: [
     {
       name: 'Home',
@@ -146,3 +146,5 @@ export default {
     },
   ],
 };
+
+export default Nav;

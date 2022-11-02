@@ -2,20 +2,14 @@ import React, { Component } from "react";
 import {
     Row,
     Col,
-    CardHeader,
-    FormGroup,
-    Label,
-    Input,
     Button,
     Card,
     CardBody,
     Table,
-    Modal, 
 } from 'reactstrap';
 import CategoryDataService from "../../services/category.service.js";
 import PostDataService from "../../services/post.service.js";
 import { Loader } from '../../vibe/';
-//import AddCategory from "./AddCategory";
 
 export default class Posts extends Component {
     constructor(props) {
@@ -123,10 +117,10 @@ export default class Posts extends Component {
                                 <td>{++i}</td>
                                 <td>{post.title}</td>
                                 <td>{catagories && catagories.map((pCatagory) => (
-                                        pCatagory.categoryId == post.category ?  pCatagory.title : ''
+                                        pCatagory.categoryId === post.category ?  pCatagory.title : ''
                                     ))}</td>
                                 {/* <td>{post.primaryPicture}</td> */}
-                                <td>{post.status == 1 ? 'Enabled' : 'Disabled'  }</td>
+                                <td>{post.status === 1 ? 'Enabled' : 'Disabled'  }</td>
                                 <td>
                                 <Button onClick={ () => this.editPost(post.id)} color="primary" size="sm"><i className="fa fa-edit"></i></Button>{' '}
                                 <Button onClick={ () => {if(window.confirm('Delete the item?')) this.deletePost(post.id)}} color="danger"size="sm"><i className="fa fa-trash"></i></Button>
